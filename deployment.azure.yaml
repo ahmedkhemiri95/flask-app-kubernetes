@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api
+        image: ahmedkhemiri24/flask-app-kubernetes:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+        ports:
+        - containerPort: 50
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+spec:
+  ports:
+  - port: 50
+  selector:
+    app: api
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app-kubernetes
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: flask-app-kubernetes
+  template:
+    metadata:
+      labels:
+        app: flask-app-kubernetes
+    spec:
+      containers:
+      - name: flask-app-container
+        image: ahmedkhemiri24/flask-app-kubernetes:latest
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 250m
+            memory: 256Mi
+        ports:
+        - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-app-kubernetes
+spec:
+  ports:
+  - port: 5000
+  selector:
+    app: flask-app-kubernetes
