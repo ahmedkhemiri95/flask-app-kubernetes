@@ -5,5 +5,5 @@ Flask-WTF==0.14.3
 itsdangerous==2.0.0
 Jinja2==3.0.0
 MarkupSafe==2.0.0
-Werkzeug==2.0.0
+Werkzeug==2.2.3
 WTForms==2.3.3
